@@ -1,3 +1,6 @@
+#include <cstddef>
+#include "MemPage_t.h"
+
 #define DEFAULT_PAGE_SIZE 6
 
 size_t MemPage_t::m_defaultPageSize = DEFAULT_PAGE_SIZE;
@@ -33,16 +36,51 @@ size_t MemPage_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
 
 size_t MemPage_t::MemWrite(void* _data, size_t _dataSize)
 {
-	MemWrite(_data, _dataSize, GetPos());
+	return MemWrite(_data, _dataSize, GetPos());
 }
 
-size_t MemRead(void** _data, size_t _dataSize, size_t _pos)
+size_t MemPage_t::MemRead(void** _data, size_t _dataSize, size_t _pos)
 {
 	size_t numOfBytesToRead = m_capacity - (GetPos() + 1);
 	numOfBytesToRead < _dataSize ? numOfBytesToRead : _dataSize; 
 	
-	memcpy();
+	memcpy(*_data, m_data + _pos, numOfBytesToRead);
+	
+	return numOfBytesToRead;
 }
+
+size_t MemPage_t::MemRead(void** _data, size_t _dataSize)
+{
+	return MemRead(_data, _dataSize, GetPos());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

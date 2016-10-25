@@ -1,3 +1,5 @@
+#include <cstddef>
+
 class MemPage_t : public MemManager_t
 {
 	public:

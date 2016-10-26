@@ -1,4 +1,8 @@
+#ifndef __MEMPAGE_H__
+#define __MEMPAGE_H__
+
 #include <cstddef>
+#include "MemManager_t.h"
 
 class MemPage_t : public MemManager_t
 {
@@ -14,7 +18,6 @@ class MemPage_t : public MemManager_t
 		virtual size_t MemRead(void** _data, size_t _dataSize, size_t _pos);
 		virtual size_t MemRead(void** _data, size_t _dataSize);
 		
-		//TODO private setActualSize
 	private:
 		MemPage_t(MemPage_t& _memPage);
 		void operator=(MemPage_t& _memPage);
@@ -39,7 +42,7 @@ size_t MemPage_t::GetDefaultSize() const
 	return MemPage_t::m_defaultPageSize;
 }
 
-
+#endif // __MEMPAGE_H__
 
 
 

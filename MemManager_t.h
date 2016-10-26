@@ -1,3 +1,6 @@
+#ifndef __MEMMANAGER_H__
+#define __MEMMANAGER_H__
+
 #include <cstddef>
 
 class MemManager_t
@@ -6,7 +9,7 @@ class MemManager_t
 		enum MemResult {MEM_SUCCESS, MEM_ERROR};
 	public:
 		MemManager_t();
-		~MemManager_t();
+		virtual ~MemManager_t();
 		inline size_t GetPos() const;
 		inline MemResult SetPos(size_t _pos);
 		inline bool IsEmpty() const;
@@ -48,10 +51,12 @@ size_t MemManager_t::GetActualSize() const
 	return m_actualSize;
 }
 
-void SetActualSize(size_t _size)
+void MemManager_t::SetActualSize(size_t _size)
 {
 	m_actualSize = _size;
 }
+
+#endif // __MEMMANAGER_H__
 
 
 

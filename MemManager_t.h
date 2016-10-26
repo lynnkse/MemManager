@@ -16,8 +16,8 @@ class MemManager_t
 		inline size_t GetActualSize() const;
 		virtual size_t MemWrite(void* _data, size_t _dataSize, size_t _pos) = 0;
 		virtual size_t MemWrite(void* _data, size_t _dataSize) = 0;
-		virtual size_t MemRead(void** _data, size_t _dataSize, size_t _pos) = 0;
-		virtual size_t MemRead(void** _data, size_t _dataSize) = 0;
+		virtual size_t MemRead(void* _data, size_t _dataSize, size_t _pos) = 0;
+		virtual size_t MemRead(void* _data, size_t _dataSize) = 0;
 	protected:
 		inline void SetActualSize(size_t _size);
 	private:
@@ -33,7 +33,7 @@ size_t MemManager_t::GetPos() const
 MemManager_t::MemResult MemManager_t::SetPos(size_t _pos)
 {
 	MemManager_t::MemResult result = MemManager_t::MEM_ERROR;
-	if(_pos < m_actualSize)
+	if(_pos <= m_actualSize)
 	{
 		m_currPos = _pos;
 		result = MemManager_t::MEM_SUCCESS;

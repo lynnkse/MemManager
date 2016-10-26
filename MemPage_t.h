@@ -15,8 +15,8 @@ class MemPage_t : public MemManager_t
 		inline size_t GetDefaultSize() const;
 		virtual size_t MemWrite(void* _data, size_t _dataSize, size_t _pos);
 		virtual size_t MemWrite(void* _data, size_t _dataSize);
-		virtual size_t MemRead(void** _data, size_t _dataSize, size_t _pos);
-		virtual size_t MemRead(void** _data, size_t _dataSize);
+		virtual size_t MemRead(void* _data, size_t _dataSize, size_t _pos);
+		virtual size_t MemRead(void* _data, size_t _dataSize);
 		
 	private:
 		MemPage_t(MemPage_t& _memPage);

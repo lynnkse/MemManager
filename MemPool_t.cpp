@@ -55,7 +55,7 @@ size_t MemPool_t::MemWrite(void* _data, size_t _dataSize)
 	return MemWrite(_data, _dataSize, GetPos());
 }
 
-size_t MemPool_t::MemRead(void** _data, size_t _dataSize, size_t _pos)
+size_t MemPool_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
 {
 	size_t bytesRead;
 	size_t initialDataSize = _dataSize;
@@ -68,7 +68,7 @@ size_t MemPool_t::MemRead(void** _data, size_t _dataSize, size_t _pos)
 	
 	while(_dataSize > 0 && currPage)
 	{
-		bytesRead = currPage->MemRead((void**)data, _dataSize, _pos);
+		bytesRead = currPage->MemRead((void*)data, _dataSize, _pos);
 		_dataSize -= bytesRead;
 		*data += bytesRead;
 		_pos = 0;
@@ -81,7 +81,7 @@ size_t MemPool_t::MemRead(void** _data, size_t _dataSize, size_t _pos)
 	return initialDataSize - _dataSize;
 }
 
-size_t MemPool_t::MemRead(void** _data, size_t _dataSize)
+size_t MemPool_t::MemRead(void* _data, size_t _dataSize)
 {
 	return MemRead(_data, _dataSize, GetPos());
 }
@@ -90,7 +90,7 @@ MemPage_t* MemPool_t::GetCurrPage(size_t _pos) const
 {
 	MemPage_t* currPage = NULL;
 	
-	if(_pos >= GetActualSize())
+	if(_pos > GetActualSize())
 	{
 		return 0;
 	}

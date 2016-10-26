@@ -22,10 +22,11 @@ MemPool_t::~MemPool_t()
 size_t MemPool_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
 {
 	size_t bytesWritten;
+	size_t initialDataSize = _dataSize;
 	size_t newActualSize;
 	char* data = (char*) _data;
 	MemPage_t* currPage = GetCurrPage(_pos);//update _pos here
-	if(!currPage)
+	if(!currPage || !_data)
 	{
 		return 0;
 	}
@@ -45,9 +46,9 @@ size_t MemPool_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
 		}
 	}
 	
-	SetPos(GetPos() + _dataSize);
+	SetPos(GetPos() + initialDataSize);
 	
-	return _dataSize;
+	return initialDataSize;
 }
 
 size_t MemPool_t::MemWrite(void* _data, size_t _dataSize)
@@ -59,9 +60,9 @@ size_t MemPool_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
 {
 	size_t bytesRead;
 	size_t initialDataSize = _dataSize;
-	char** data = (char**) _data;
+	char* data = (char*) _data;
 	MemPage_t* currPage = GetCurrPage(_pos);//update _pos here
-	if(!currPage)
+	if(!currPage || _pos + _dataSize > GetActualSize() || !_data)
 	{
 		return 0;
 	}
@@ -70,7 +71,7 @@ size_t MemPool_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
 	{
 		bytesRead = currPage->MemRead((void*)data, _dataSize, _pos);
 		_dataSize -= bytesRead;
-		*data += bytesRead;
+		data += bytesRead;
 		_pos = 0;
 		if(_dataSize > 0)
 		{
@@ -114,7 +115,9 @@ MemPage_t* MemPool_t::GetCurrPage(size_t _pos) const
 MemPage_t* MemPool_t::GetNextPageForWriting(MemPage_t* _currPage)
 {
 	MemPage_t* page;
+
 	vector<MemPage_t*>::iterator it = m_pages.end();
+	--it;
 	
 	if(*it == _currPage) //currPage is the last page
 	{
@@ -123,8 +126,7 @@ MemPage_t* MemPool_t::GetNextPageForWriting(MemPage_t* _currPage)
 	}
 	else //else overwrite the next page
 	{
-		++it;
-		page = *it;
+		page = GetNextPageForReading(_currPage);
 	} 
 	
 	return page;

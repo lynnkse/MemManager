@@ -26,6 +26,11 @@ MemPage_t::~MemPage_t()
 
 size_t MemPage_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
 {
+	if(!_data)
+	{
+		return 0;
+	}	
+
 	size_t numOfBytesToWrite = m_capacity - _pos;
 	numOfBytesToWrite = (numOfBytesToWrite < _dataSize ? numOfBytesToWrite : _dataSize); 
 	size_t newActualSize = (GetActualSize() + numOfBytesToWrite <= m_capacity ? GetActualSize() + numOfBytesToWrite : m_capacity);
@@ -45,7 +50,12 @@ size_t MemPage_t::MemWrite(void* _data, size_t _dataSize)
 
 size_t MemPage_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
 {
-	size_t numOfBytesToRead = m_capacity - GetPos();
+	if(!_data)
+	{
+		return 0;
+	}	
+
+	size_t numOfBytesToRead = m_capacity - _pos;
 	numOfBytesToRead = (numOfBytesToRead < _dataSize ? numOfBytesToRead : _dataSize); 
 	
 	memcpy(_data, (char*)m_data + _pos, numOfBytesToRead);

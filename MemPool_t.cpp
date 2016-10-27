@@ -19,7 +19,7 @@ MemPool_t::~MemPool_t()
 	}
 }
 
-size_t MemPool_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
+size_t MemPool_t::MemWrite(void* const _data, size_t _dataSize, size_t _pos)
 {
 	size_t bytesWritten;
 	size_t initialDataSize = _dataSize;
@@ -51,12 +51,12 @@ size_t MemPool_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
 	return initialDataSize;
 }
 
-size_t MemPool_t::MemWrite(void* _data, size_t _dataSize)
+size_t MemPool_t::MemWrite(void* const _data, size_t _dataSize)
 {
 	return MemWrite(_data, _dataSize, GetPos());
 }
 
-size_t MemPool_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
+size_t MemPool_t::MemRead(void* _data, size_t _dataSize, size_t _pos) const
 {
 	size_t bytesRead;
 	size_t initialDataSize = _dataSize;
@@ -82,7 +82,7 @@ size_t MemPool_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
 	return initialDataSize - _dataSize;
 }
 
-size_t MemPool_t::MemRead(void* _data, size_t _dataSize)
+size_t MemPool_t::MemRead(void* _data, size_t _dataSize) const
 {
 	return MemRead(_data, _dataSize, GetPos());
 }
@@ -112,7 +112,7 @@ MemPage_t* MemPool_t::GetCurrPage(size_t _pos) const
 	return currPage;
 }
 
-MemPage_t* MemPool_t::GetNextPageForWriting(MemPage_t* _currPage)
+MemPage_t* MemPool_t::GetNextPageForWriting(MemPage_t* const _currPage)
 {
 	MemPage_t* page;
 
@@ -132,11 +132,11 @@ MemPage_t* MemPool_t::GetNextPageForWriting(MemPage_t* _currPage)
 	return page;
 }
 
-MemPage_t* MemPool_t::GetNextPageForReading(MemPage_t* _currPage)
+MemPage_t* MemPool_t::GetNextPageForReading(MemPage_t* const _currPage) const
 {
 	MemPage_t* page = NULL;
 	
-	for(vector<MemPage_t*>::iterator it = m_pages.begin(); it != m_pages.end(); ++it)
+	for(vector<MemPage_t*>::const_iterator it = m_pages.begin(); it != m_pages.end(); ++it)
 	{
 		if(*it == _currPage && (it + 1 != m_pages.end()))
 		{

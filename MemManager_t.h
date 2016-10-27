@@ -14,10 +14,10 @@ class MemManager_t
 		inline MemResult SetPos(size_t _pos);
 		inline bool IsEmpty() const;
 		inline size_t GetActualSize() const;
-		virtual size_t MemWrite(void* _data, size_t _dataSize, size_t _pos) = 0;
-		virtual size_t MemWrite(void* _data, size_t _dataSize) = 0;
-		virtual size_t MemRead(void* _data, size_t _dataSize, size_t _pos) = 0;
-		virtual size_t MemRead(void* _data, size_t _dataSize) = 0;
+		virtual size_t MemWrite(void* const _data, size_t _dataSize, size_t _pos) = 0;
+		virtual size_t MemWrite(void* const _data, size_t _dataSize) = 0;
+		virtual size_t MemRead(void* _data, size_t _dataSize, size_t _pos) const = 0;
+		virtual size_t MemRead(void* _data, size_t _dataSize) const = 0;
 	protected:
 		inline void SetActualSize(size_t _size);
 	private:

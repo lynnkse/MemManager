@@ -24,7 +24,7 @@ MemPage_t::~MemPage_t()
 	delete[] (char*)m_data;
 }
 
-size_t MemPage_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
+size_t MemPage_t::MemWrite(void* const _data, size_t _dataSize, size_t _pos)
 {
 	if(!_data)
 	{
@@ -43,12 +43,12 @@ size_t MemPage_t::MemWrite(void* _data, size_t _dataSize, size_t _pos)
 	return numOfBytesToWrite;
 }
 
-size_t MemPage_t::MemWrite(void* _data, size_t _dataSize)
+size_t MemPage_t::MemWrite(void* const _data, size_t _dataSize)
 {
 	return MemWrite(_data, _dataSize, GetPos());
 }
 
-size_t MemPage_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
+size_t MemPage_t::MemRead(void* _data, size_t _dataSize, size_t _pos) const
 {
 	if(!_data)
 	{
@@ -63,7 +63,7 @@ size_t MemPage_t::MemRead(void* _data, size_t _dataSize, size_t _pos)
 	return numOfBytesToRead;
 }
 
-size_t MemPage_t::MemRead(void* _data, size_t _dataSize)
+size_t MemPage_t::MemRead(void* _data, size_t _dataSize) const
 {
 	return MemRead(_data, _dataSize, GetPos());
 }
